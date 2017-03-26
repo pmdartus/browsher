@@ -1,0 +1,37 @@
+{
+  "name": "browsher",
+  "version": "1.0.0",
+  "main": "dist/server/index.js",
+  "license": "MIT",
+  "scripts": {
+    "flow": "flow; test $? -eq 0 -o $? -eq 2",
+    "lint": "eslint",
+    "start": "node dist/server",
+    "build:node": "babel src --out-dir dist --ignore client",
+    "build:browser": "webpack",
+    "build": "concurrently --n \"NODE,BROWSER\" \"npm run build:node\" \"npm run build:browser\"",
+    "build:dev": "concurrently -p \"[{name}]\" -n \"NODE,BROWSER\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run build:node -- --watch\" \"npm run build:browser -- --watch\"",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^7.2.1",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-flow": "^6.23.0",
+    "concurrently": "^3.4.0",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-flowtype": "^2.30.4",
+    "eslint-plugin-import": "^2.2.0",
+    "flow-bin": "^0.42.0",
+    "webpack": "^2.3.2"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "opn": "^4.0.2",
+    "serialize-error": "^2.1.0",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
+  }
+}
