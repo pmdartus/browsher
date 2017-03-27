@@ -1,7 +1,7 @@
 {
   "name": "browsher",
   "version": "1.0.0",
-  "main": "dist/server/index.js",
+  "main": "dist/server/main.js",
   "license": "MIT",
   "scripts": {
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
@@ -29,7 +29,10 @@
   },
   "dependencies": {
     "express": "^4.15.2",
+    "http-proxy": "^1.16.2",
     "opn": "^4.0.2",
+    "portscanner": "^2.1.1",
+    "replacestream": "^4.0.2",
     "serialize-error": "^2.1.0",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3"

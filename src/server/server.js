@@ -7,15 +7,10 @@ import {
   Server,
 } from 'http';
 
+import setupSocket from './socket';
 import {
   DEFAULT_PORT as PORT,
 } from '../shared/config';
-import {
-  setupSocket,
-} from './socket';
-import {
-  registerServer,
-} from './cleanup';
 
 const CLIENT_FILE_PATH = path.resolve(__dirname, '../client.js');
 const HTML_TEMPLATE = `
@@ -31,22 +26,19 @@ const HTML_TEMPLATE = `
 </html>
 `;
 
-function setupApp(app) {
+export default function (): Server {
+  const app = express();
+  const http = Server(app);
+
+  const io = socketIO(http);
+  setupSocket(io);
+
   app.get('/', (req, res) => res.send(HTML_TEMPLATE));
   app.get('/client.js', (req, res) => res.sendFile(CLIENT_FILE_PATH));
-}
 
-export default function () {
-  return new Promise((resolve) => {
-    const app = express();
-    const http = Server(app);
-    registerServer(http);
+  http.listen(PORT, () => (
+    console.log(`Ready to listen on ${PORT}`)
+  ));
 
-    const io = socketIO(http);
-    setupSocket(io);
-
-    setupApp(app);
-
-    http.listen(PORT, () => resolve(http));
-  });
+  return http;
 }

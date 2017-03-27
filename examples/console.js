@@ -1,11 +1,11 @@
-const browsher = require('browsher');
+const browsher = require('browsher').default;
 
 const LEVEL_MAP = {
-  debug: "🔎",
-  log: "💬",
-  warn: "⚠️",
-  error: "🚫",
-}
+  debug: '🔎',
+  log: '💬',
+  warn: '⚠️',
+  error: '🚫',
+};
 
 browsher({
   browserName: 'chrome',
@@ -14,8 +14,6 @@ browsher({
   instance.on('log', ({ level, args }) => (
     console[level](`[browser - ${LEVEL_MAP[level]}]`, ...args)
   ));
-
-  instance.on('exit', () => (
-    console.log('exit')
-  ));
-});
+}).catch(err => (
+  console.error(err)
+));

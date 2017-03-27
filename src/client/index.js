@@ -17,6 +17,17 @@ const socket = socketIOClient(window.location.host);
 
 socket.on(IO_CONNECT, () => {
   console.log('[socket.io] connected');
+  const iframe = document.createElement('iframe');
+  iframe.src = 'http://localhost:3001/';
+  iframe.onload = () => {
+    console.log('loaded');
+
+    iframe.contentWindow.close = (...args) => {
+      console.log('Will Close with', args);
+    };
+  };
+
+  document.body.appendChild(iframe);
 });
 
 socket.on(IO_DISCONNECT, () => {
